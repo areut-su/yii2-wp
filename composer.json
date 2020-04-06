@@ -1,0 +1,21 @@
+{
+    "name": "areut/yii2-wp",
+    "description": "use DB WP in Yii2",
+    "type": "yii2-extension",
+    "keywords": ["yii2","wp","wordpress","extension"],
+    "license": "BSD-3-Clause",
+    "authors": [
+        {
+            "name": "areut",
+            "email": "areut@ya.ru"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "~2.0.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "areutYii2Wp\\": ""
+        }
+    }
+}
