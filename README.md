@@ -21,6 +21,22 @@ or add
 
 to the require section of your `composer.json` file.
 
+    add "areut/yii2-wp": "dev-master"
+
+    "repositories": [
+              {
+                "type": "git",
+                "url": "https://github.com/areut-su/yii2-wp.git"
+              }
+              ],
+              or 
+              "repositories": [
+                  {
+                    "type": "path",
+                    "url": "/site/extension/yii2-wp"
+                  },
+                  ],
+
 
 Usage
 -----
