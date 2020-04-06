@@ -48,7 +48,8 @@ $listView = \yii\widgets\ListView::widget(
             'dataProvider' => $dataProvider,
             'layout' => "{items}\n{pager}",
             'itemView' => function($data) {
-                return '<div class="col-xs-6 col-sm-4 col-lg-3">' . insolita\wgadminlte\SmallBox::widget(
+                return '<div class="col-xs-6 col-sm-4 col-lg-3">' ;
+                /*. SmallBox::widget(
                         [
                             'head' => $data['head'],
                             'type' => $data['color'],
@@ -57,7 +58,7 @@ $listView = \yii\widgets\ListView::widget(
                             'footer_link' => $data['route'],
                             'icon' => 'fa fa-' . $data['icon'],
                         ]
-                    );
+                    );*/
             },
         ]
     ) . '</div>';
