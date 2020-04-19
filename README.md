@@ -5,18 +5,17 @@ use DB WP in Yii2
 Installation
 ------------
 
-The preferred way to install this extension is through [composer](http://getcomposer.org/download/).
 
 Either run
 
 ```
-php composer.phar require --prefer-dist areut/yii2-wp "*"
+php composer.phar require --prefer-dist areut/yii2-wp "dev-master"
 ```
 
 or add
 
 ```
-"areut/yii2-wp": "*"
+"areut/yii2-wp": "dev-master"
 ```
 
 to the require section of your `composer.json` file.
@@ -30,11 +29,11 @@ to the require section of your `composer.json` file.
               }
               ],
               or 
-              "repositories": [
-                  {
-                    "type": "path",
-                    "url": "/site/extension/yii2-wp"
-                  },
+    "repositories": [
+                    {
+                        "type": "path",
+                        "url": "/site/extension/yii2-wp"
+                    },
                   ],
 
 
@@ -42,6 +41,3 @@ Usage
 -----
 
 Once the extension is installed, simply use it in your code by  :
-
-```php
-<?= \areutYii2Wp\AutoloadExample::widget(); ?>```
