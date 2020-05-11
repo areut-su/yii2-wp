@@ -14,7 +14,7 @@ use Yii;
  *
  * @property Post $post
  */
-class PostMeta extends \yii\db\ActiveRecord
+class PostMeta extends BaseActiveRecord
 {
     /**
      * {@inheritdoc}

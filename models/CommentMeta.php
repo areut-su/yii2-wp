@@ -14,7 +14,7 @@ use Yii;
  *
  * @property Comment $comment
  */
-class CommentMeta extends \yii\db\ActiveRecord
+class CommentMeta extends BaseActiveRecord
 {
     /**
      * {@inheritdoc}

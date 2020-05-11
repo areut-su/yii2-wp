@@ -14,7 +14,7 @@ use Yii;
  *
  * @property User $user
  */
-class UserMeta extends \yii\db\ActiveRecord
+class UserMeta extends BaseActiveRecord
 {
     /**
      * {@inheritdoc}

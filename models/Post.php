@@ -7,37 +7,37 @@ use Yii;
 /**
  * This is the model class for table "{{%posts}}".
  *
- * @property int $ID
- * @property int $post_author
- * @property string $post_date
- * @property string $post_date_gmt
- * @property string $post_content
- * @property string $post_title
- * @property string $post_excerpt
- * @property string $post_status
- * @property string $comment_status
- * @property string $ping_status
- * @property string $post_password
- * @property string $post_name
- * @property string $to_ping
- * @property string $pinged
- * @property string $post_modified
- * @property string $post_modified_gmt
- * @property string $post_content_filtered
- * @property int $post_parent
- * @property string $guid
- * @property int $menu_order
- * @property string $post_type
- * @property string $post_mime_type
- * @property int $comment_count
+ * @property int                $ID
+ * @property int                $post_author
+ * @property string             $post_date
+ * @property string             $post_date_gmt
+ * @property string             $post_content
+ * @property string             $post_title
+ * @property string             $post_excerpt
+ * @property string             $post_status
+ * @property string             $comment_status
+ * @property string             $ping_status
+ * @property string             $post_password
+ * @property string             $post_name
+ * @property string             $to_ping
+ * @property string             $pinged
+ * @property string             $post_modified
+ * @property string             $post_modified_gmt
+ * @property string             $post_content_filtered
+ * @property int                $post_parent
+ * @property string             $guid
+ * @property int                $menu_order
+ * @property string             $post_type
+ * @property string             $post_mime_type
+ * @property int                $comment_count
  *
- * @property Comment[] $comments
- * @property PostMeta[] $postmeta
- * @property User $postAuthor
+ * @property Comment[]          $comments
+ * @property PostMeta[]         $postmeta
+ * @property User               $postAuthor
  * @property TermRelationship[] $termRelationships
- * @property TermTaxonomy[] $termTaxonomies
+ * @property TermTaxonomy[]     $termTaxonomies
  */
-class Post extends \yii\db\ActiveRecord
+class Post extends BaseActiveRecord
 {
     /**
      * {@inheritdoc}
@@ -45,6 +45,11 @@ class Post extends \yii\db\ActiveRecord
     public static function tableName()
     {
         return '{{%posts}}';
+    }
+
+    public static function listTitle()
+    {
+        return self::find()->select('post_title')->distinct()->indexBy('ID')->asArray()->column();
     }
 
     /**
@@ -61,7 +66,10 @@ class Post extends \yii\db\ActiveRecord
             [['post_password', 'guid'], 'string', 'max' => 255],
             [['post_name'], 'string', 'max' => 200],
             [['post_mime_type'], 'string', 'max' => 100],
-            [['post_author'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['post_author' => 'ID']],
+            [
+                ['post_author'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(),
+                'targetAttribute' => ['post_author' => 'ID'],
+            ],
         ];
     }
 
@@ -144,7 +152,8 @@ class Post extends \yii\db\ActiveRecord
      */
     public function getTermTaxonomies()
     {
-        return $this->hasMany(TermTaxonomy::className(), ['term_taxonomy_id' => 'term_taxonomy_id'])->viaTable('{{%term_relationships}}', ['object_id' => 'ID']);
+        return $this->hasMany(TermTaxonomy::className(),
+            ['term_taxonomy_id' => 'term_taxonomy_id'])->viaTable('{{%term_relationships}}', ['object_id' => 'ID']);
     }
 
     /**

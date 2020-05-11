@@ -21,7 +21,7 @@ use Yii;
  * @property Post[]     $posts
  * @property UserMeta[] $usermeta
  */
-class User extends \yii\db\ActiveRecord
+class User extends BaseActiveRecord
 {
     /**
      * {@inheritdoc}
