@@ -1,7 +1,16 @@
 <?php
+/**
+ * Copyright (c) 2020. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
 
 namespace areutYii2Wp;
 
+use areutYii2Wp\components\Options;
+use yii\base\InvalidConfigException;
 use yii\filters\AccessControl;
 
 class Module extends \yii\base\Module
@@ -14,18 +23,26 @@ class Module extends \yii\base\Module
 
     public function __construct($id, $parent = null, $config = [])
     {
-        parent::__construct($id, $parent, $config);
+        parent::__construct( $id, $parent, $config );
 
 
-        if (!isset($config['components']['cache']))
-        {
+        try {
+            if (!isset( $config['components']['cache'] )) {
+                $this->set( 'cache',
+                    [
+                        'class' => 'yii\caching\ArrayCache',
+                    ] );
+            }
+            if (!isset( $config['components']['options'] )) {
+                $this->set( 'options',
+                    [
+                        'class' => 'areutYii2Wp\components\Options',
+                    ] );
+            }
+        } catch (InvalidConfigException $e) {
             /** @noinspection PhpUnhandledExceptionInspection */
-            $this->set('cache',
-                [
-                    'class' => 'yii\caching\ArrayCache',
-                ]);
+            throw new InvalidConfigException( $e );
         }
-
     }
 
 
@@ -36,8 +53,8 @@ class Module extends \yii\base\Module
 
 
         parent::init();
-        $this->matchCallback = $this->matchCallback ?? (function($rule, $action) {
-                return (isset(\Yii::$app->user->isGuest) && \Yii::$app->user->identity->username === 'admin');
+        $this->matchCallback = $this->matchCallback ?? (function ($rule, $action) {
+                return (isset( \Yii::$app->user->isGuest ) && \Yii::$app->user->identity->username === 'admin');
             });
 
     }
@@ -46,10 +63,20 @@ class Module extends \yii\base\Module
      * Returns the cache component.
      * @return object|\yii\caching\CacheInterface
      */
-    public function getCache1()
+    public function getCache()
     {
-        /** @noinspection PhpUnhandledExceptionInspection */
-        return $this->get('cache1', false);
+
+        return $this->get( 'cache', false );
+    }
+
+    /**
+     * @return Options|object|null
+     * @throws InvalidConfigException
+     */
+    public function getOption()
+    {
+
+        return $this->get( 'options', false );
     }
 
     public function behaviors()

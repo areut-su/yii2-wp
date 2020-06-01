@@ -1,4 +1,11 @@
 <?php
+/**
+ * Copyright (c) 2020. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
 
 namespace areutYii2Wp\components;
 
@@ -23,7 +30,7 @@ class Options extends Component
 
     public function init($config = [])
     {
-        $this->cache             = WP::cache();
+        $this->cache = WP::cache();
         $this->cache->serializer = false;
         $this->getAutoLoad();
     }
@@ -32,15 +39,14 @@ class Options extends Component
     {
         $options = OptionsModel::find()
             ->autoload()
-            ->indexBy(function($model) {
-                return $this->buildKey($model['option_name']);
-            })
-            ->select(['option_value', 'option_name'])
+            ->indexBy( function ($model) {
+                return $this->buildKey( $model['option_name'] );
+            } )
+            ->select( ['option_value', 'option_name'] )
             ->asArray()
             ->column();
-        var_dump($options);
         /** @var array $options */
-        $this->cache->multiAdd($options, $this->duration);
+        $this->cache->multiAdd( $options, $this->duration );
     }
 
     /**
@@ -56,11 +62,12 @@ class Options extends Component
      */
     public function get($key)
     {
-        if (!$value = $this->cache->get($this->buildKey($key)))
-        {
-            $value = OptionsModel::findValueByKey($key);
+        if (!$value = $this->cache->get( $this->buildKey( $key ) )) {
+            $value = OptionsModel::findValueByKey( $key );
+            if ($value || $value === false) {
+                $this->cache->set( $key, $value );
+            }
         }
-
         return $value;
     }
 
@@ -71,9 +78,8 @@ class Options extends Component
      */
     public function exists($key)
     {
-        if (!$value = $this->cache->exists($this->buildKey($key)))
-        {
-            $value = OptionsModel::existsValueByKey($key);
+        if (!$value = $this->cache->exists( $this->buildKey( $key ) )) {
+            $value = OptionsModel::existsValueByKey( $key );
 
         }
 
@@ -100,18 +106,14 @@ class Options extends Component
      */
     public function set($key, $value, $duration = null, $dependency = null)
     {
-        $duration = isset($duration) ? $duration : $this->duration;
-
-        $this->cache->set($this->buildKey($key), $value, $duration, $dependency);
-        $model = OptionsModel::findValueByKey($key);
-        if ($model)
-        {
+        $duration = isset( $duration ) ? $duration : $this->duration;
+        $this->cache->set( $this->buildKey( $key ), $value, $duration, $dependency );
+        $model = OptionsModel::findValueByKey( $key );
+        if ($model) {
             $model->option_name = $value;
-        }
-        else
-        {
-            $model               = new OptionsModel;
-            $model->option_name  = $key;
+        } else {
+            $model = new OptionsModel;
+            $model->option_name = $key;
             $model->option_value = $value;
         }
 

@@ -1,4 +1,11 @@
 <?php
+/**
+ * Copyright (c) 2020. Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+ * Morbi non lorem porttitor neque feugiat blandit. Ut vitae ipsum eget quam lacinia accumsan.
+ * Etiam sed turpis ac ipsum condimentum fringilla. Maecenas magna.
+ * Proin dapibus sapien vel ante. Aliquam erat volutpat. Pellentesque sagittis ligula eget metus.
+ * Vestibulum commodo. Ut rhoncus gravida arcu.
+ */
 
 namespace areutYii2Wp\models;
 
@@ -7,17 +14,17 @@ use Yii;
 /**
  * This is the model class for table "{{%options}}".
  *
- * @property int    $option_id
+ * @property int $option_id
  * @property string $option_name
  * @property string $option_value
  * @property string $autoload
  */
 class Options extends BaseActiveRecord
 {
-    const FIELD_OPTION_NAME  = 'option_name';
+    const FIELD_OPTION_NAME = 'option_name';
     const FIELD_OPTION_VALUE = 'option_value';
-    const FIELD_ID           = 'option_id';
-    const FIELD_AUTOLOAD     = 'autoload';
+    const FIELD_ID = 'option_id';
+    const FIELD_AUTOLOAD = 'autoload';
 
     /**
      * {@inheritdoc}
@@ -30,11 +37,11 @@ class Options extends BaseActiveRecord
     /**
      * @param string|integer|array $key
      *
-     * @return string;
+     * @return false|string|null ;
      */
     public static function findValueByKey($key)
     {
-        return static::find()->whereKey($key)->select(static::FIELD_OPTION_VALUE)->one();
+        return static::find()->whereKey( $key )->select( static::FIELD_OPTION_VALUE )->asArray()->scalar();
     }
 
     /**
@@ -44,7 +51,7 @@ class Options extends BaseActiveRecord
      */
     public static function existsValueByKey($key)
     {
-        return static::find()->whereKey($key)->exists();
+        return static::find()->whereKey( $key )->exists();
     }
 
     /**
@@ -67,10 +74,10 @@ class Options extends BaseActiveRecord
     public function attributeLabels()
     {
         return [
-            'option_id' => Yii::t('app', 'Option ID'),
-            'option_name' => Yii::t('app', 'Option Name'),
-            'option_value' => Yii::t('app', 'Option Value'),
-            'autoload' => Yii::t('app', 'Autoload'),
+            'option_id' => Yii::t( 'app', 'Option ID' ),
+            'option_name' => Yii::t( 'app', 'Option Name' ),
+            'option_value' => Yii::t( 'app', 'Option Value' ),
+            'autoload' => Yii::t( 'app', 'Autoload' ),
         ];
     }
 
@@ -80,6 +87,6 @@ class Options extends BaseActiveRecord
      */
     public static function find()
     {
-        return new OptionsQuery(get_called_class());
+        return new OptionsQuery( get_called_class() );
     }
 }
